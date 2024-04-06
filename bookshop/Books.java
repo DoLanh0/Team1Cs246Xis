@@ -8,26 +8,45 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
-
 public class Books extends javax.swing.JFrame {
-  
+
+    /**
+     * Creates new form Book
+     */
     public Books() {
         initComponents();
         DisplayBooks();
     }
-
-
+Connection Con = null;
+Statement St = null;
+ResultSet Rs = null;
+private void DisplayBooks()
+{
+    try {
+        Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
+        St = Con.createStatement();
+        Rs = St.executeQuery("Select * from App.BookTbl");
+        BooksTable.setModel(DbUtils.resultSetToTableModel(Rs));
+    } catch (Exception e) {
+    }
+}
+private void Reset()
+{
+    BookIdTb.setText("");
+    NameTb.setText("");
+    AuthorTb.setText("");
+    PriceTb.setText("");
+    QuantityTb.setText("");
+    CatCb.setSelectedIndex(0); 
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField4 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         UserLbI = new javax.swing.JLabel();
-        LogoutLbt = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         BookLbI = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -44,7 +63,6 @@ public class Books extends javax.swing.JFrame {
         DeleteBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         BooksTable = new javax.swing.JTable();
-        jLabel12 = new javax.swing.JLabel();
         ResetBtn = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -52,15 +70,11 @@ public class Books extends javax.swing.JFrame {
         CatCb = new javax.swing.JComboBox<>();
         SaveBtn1 = new javax.swing.JButton();
         PrintBtn = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         LogoutLbt2 = new javax.swing.JLabel();
 
-        jTextField4.setText("jTextField4");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -94,17 +108,6 @@ public class Books extends javax.swing.JFrame {
             }
         });
         getContentPane().add(UserLbI, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, -1, 24));
-
-        LogoutLbt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/m_Hinh4.png"))); // NOI18N
-        LogoutLbt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LogoutLbtMouseClicked(evt);
-            }
-        });
-        getContentPane().add(LogoutLbt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 613, -1, 32));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/Hinh3-2.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 54, -1, 32));
 
         BookLbI.setBackground(new java.awt.Color(255, 255, 255));
         BookLbI.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -222,9 +225,6 @@ public class Books extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 303, 930, 260));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/Hinh2-3.png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 54, -1, 32));
-
         ResetBtn.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         ResetBtn.setForeground(new java.awt.Color(255, 92, 6));
         ResetBtn.setText("Reset");
@@ -303,7 +303,6 @@ public class Books extends javax.swing.JFrame {
             }
         });
         getContentPane().add(PrintBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 573, 100, 40));
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 64, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/Hinh1.png"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, -1, -1));
@@ -320,52 +319,19 @@ public class Books extends javax.swing.JFrame {
         getContentPane().add(LogoutLbt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, -1, 32));
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EditBtnActionPerformed
-
-    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DeleteBtnActionPerformed
-
-    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ResetBtnActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
+    private void UserLbIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserLbIMouseClicked
+        new Users().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_UserLbIMouseClicked
 
-    }//GEN-LAST:event_SaveBtnActionPerformed
-Connection Con = null;
-Statement St = null;
-ResultSet Rs = null;
-private void DisplayBooks()
-{
-    try {
-        Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
-        St = Con.createStatement();
-        Rs = St.executeQuery("Select * from App.BookTbl");
-        BooksTable.setModel(DbUtils.resultSetToTableModel(Rs));
-    } catch (Exception e) {
-    }
-}
-private void Reset()
-{
-    BookIdTb.setText("");
-    NameTb.setText("");
-    AuthorTb.setText("");
-    PriceTb.setText("");
-    QuantityTb.setText("");
-    CatCb.setSelectedIndex(0); 
-}
     private void SaveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveBtnMouseClicked
-                 if(BookIdTb.getText().isEmpty() || NameTb.getText().isEmpty() || AuthorTb.getText().isEmpty() || CatCb.getSelectedIndex() == -1 || QuantityTb.getText().isEmpty() || PriceTb.getText().isEmpty())
+        if(BookIdTb.getText().isEmpty() || NameTb.getText().isEmpty() || AuthorTb.getText().isEmpty() || CatCb.getSelectedIndex() == -1 || QuantityTb.getText().isEmpty() || PriceTb.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(this,"Missing Information");
         } else{
@@ -387,49 +353,14 @@ private void Reset()
         }
     }//GEN-LAST:event_SaveBtnMouseClicked
 
-    private void ResetBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ResetBtnMouseClicked
-        Reset();
-    }//GEN-LAST:event_ResetBtnMouseClicked
+    private void SaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnActionPerformed
 
-    private void DeleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteBtnMouseClicked
-        if(BookIdTb.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(this,"Missing Information");            
-        }else{
-            try{
-                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
-                String BId = BookIdTb.getText();
-                String Query = "Delete from App.BookTbl where BID="+ BId;
-                Statement Delete = Con.createStatement();
-                Delete.executeUpdate(Query);
-                JOptionPane.showMessageDialog(this,"Book Deleted");
-                DisplayBooks();
-                Reset();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }    
-    }//GEN-LAST:event_DeleteBtnMouseClicked
-   
-    private void CatCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatCbActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CatCbActionPerformed
-
-    private void BooksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BooksTableMouseClicked
-        DefaultTableModel model = (DefaultTableModel)BooksTable.getModel();
-        int MyIndex = BooksTable.getSelectedRow();
-        BookIdTb.setText(model.getValueAt(MyIndex, 0).toString());
-        NameTb.setText(model.getValueAt(MyIndex, 1).toString());
-        AuthorTb.setText(model.getValueAt(MyIndex, 2).toString());
-        CatCb.setSelectedItem(model.getValueAt(MyIndex, 3).toString());
-        QuantityTb.setText(model.getValueAt(MyIndex, 4).toString());
-        PriceTb.setText(model.getValueAt(MyIndex, 5).toString());       
-    }//GEN-LAST:event_BooksTableMouseClicked
+    }//GEN-LAST:event_SaveBtnActionPerformed
 
     private void EditBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditBtnMouseClicked
         if(BookIdTb.getText().isEmpty() || NameTb.getText().isEmpty() || AuthorTb.getText().isEmpty() || CatCb.getSelectedIndex() == -1 || QuantityTb.getText().isEmpty() || PriceTb.getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this,"Missing Information");            
+            JOptionPane.showMessageDialog(this,"Missing Information");
         }else{
             try{
                 Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
@@ -443,17 +374,59 @@ private void Reset()
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }    
+        }
     }//GEN-LAST:event_EditBtnMouseClicked
 
-    private void LogoutLbtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutLbtMouseClicked
+    private void EditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditBtnActionPerformed
 
-    }//GEN-LAST:event_LogoutLbtMouseClicked
+    private void DeleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteBtnMouseClicked
+        if(BookIdTb.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"Missing Information");
+        }else{
+            try{
+                Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
+                String BId = BookIdTb.getText();
+                String Query = "Delete from App.BookTbl where BID="+ BId;
+                Statement Delete = Con.createStatement();
+                Delete.executeUpdate(Query);
+                JOptionPane.showMessageDialog(this,"Book Deleted");
+                DisplayBooks();
+                Reset();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_DeleteBtnMouseClicked
 
-    private void UserLbIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserLbIMouseClicked
-        new Users().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_UserLbIMouseClicked
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DeleteBtnActionPerformed
+
+    private void BooksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BooksTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel)BooksTable.getModel();
+        int MyIndex = BooksTable.getSelectedRow();
+        BookIdTb.setText(model.getValueAt(MyIndex, 0).toString());
+        NameTb.setText(model.getValueAt(MyIndex, 1).toString());
+        AuthorTb.setText(model.getValueAt(MyIndex, 2).toString());
+        CatCb.setSelectedItem(model.getValueAt(MyIndex, 3).toString());
+        QuantityTb.setText(model.getValueAt(MyIndex, 4).toString());
+        PriceTb.setText(model.getValueAt(MyIndex, 5).toString());
+    }//GEN-LAST:event_BooksTableMouseClicked
+
+    private void ResetBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ResetBtnMouseClicked
+        Reset();
+    }//GEN-LAST:event_ResetBtnMouseClicked
+
+    private void ResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ResetBtnActionPerformed
+
+    private void CatCbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CatCbActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CatCbActionPerformed
 
     private void SaveBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveBtn1MouseClicked
         // TODO add your handling code here:
@@ -466,7 +439,7 @@ private void Reset()
     private void PrintBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintBtnMouseClicked
         try {
             BooksTable.print();
-        } catch (Exception e) {            
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_PrintBtnMouseClicked
 
@@ -505,6 +478,7 @@ private void Reset()
             java.util.logging.Logger.getLogger(Books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -522,7 +496,6 @@ private void Reset()
     private javax.swing.JComboBox<String> CatCb;
     private javax.swing.JButton DeleteBtn;
     private javax.swing.JButton EditBtn;
-    private javax.swing.JLabel LogoutLbt;
     private javax.swing.JLabel LogoutLbt2;
     private javax.swing.JTextField NameTb;
     private javax.swing.JTextField PriceTb;
@@ -535,20 +508,16 @@ private void Reset()
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import javax.swing.JOptionPane;
 
-public class Billing extends javax.swing.JFrame { 
+public class Billing extends javax.swing.JFrame {
     public Billing() {
         initComponents();
         CountRow();
@@ -28,6 +28,7 @@ public Billing(String UN) {
     CountRow();
     BillNumTb.setEditable(false);
 }
+
 Connection Con = null;
 Statement St = null, St1 = null;
 ResultSet Rs = null, Rs1 = null;
@@ -55,7 +56,6 @@ private void DisplayBooks()
         QtyTb = new javax.swing.JTextField();
         BookNameTb = new javax.swing.JTextField();
         AddToBillBtn = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         PrintBtn = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -68,14 +68,12 @@ private void DisplayBooks()
         BillTxt = new javax.swing.JTextArea();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        LogoutLbt = new javax.swing.JLabel();
         BillNumTb = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         LogoutLbt1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -164,9 +162,6 @@ private void DisplayBooks()
         });
         getContentPane().add(AddToBillBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 150, 30));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/Hinh2-3.png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, 32));
-
         PrintBtn.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         PrintBtn.setForeground(new java.awt.Color(255, 92, 6));
         PrintBtn.setText("Print");
@@ -251,14 +246,6 @@ private void DisplayBooks()
         jLabel15.setText("Books List");
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 110, -1));
 
-        LogoutLbt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bookshop/m_Hinh4.png"))); // NOI18N
-        LogoutLbt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LogoutLbtMouseClicked(evt);
-            }
-        });
-        getContentPane().add(LogoutLbt, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 590, -1, 32));
-
         BillNumTb.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         BillNumTb.setForeground(new java.awt.Color(255, 92, 6));
         getContentPane().add(BillNumTb, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 90, 30));
@@ -280,11 +267,10 @@ private void DisplayBooks()
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        System.exit(0); 
+        System.exit(0);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void UnameLbIMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UnameLbIMouseClicked
@@ -303,20 +289,20 @@ int i = 0, Total = 0, GrdTotal = 0;
             Total = Integer.valueOf(PriceTb.getText())*Integer.valueOf(QtyTb.getText());
             if(i == 1)
             {
-                BillTxt.setText(BillTxt.getText()+"        =================BOOK SHOP=================\n"+" NUM     PRODUCT     PRICE     QUANTITY     TOTAL\n"+i+"          "+BookNameTb.getText()+"  "+PriceTb.getText()+"        "+QtyTb.getText()+"                  "+Total+"\n");   
+                BillTxt.setText(BillTxt.getText()+"        =================BOOK SHOP=================\n"+" NUM     PRODUCT     PRICE     QUANTITY     TOTAL\n"+i+"          "+BookNameTb.getText()+"  "+PriceTb.getText()+"        "+QtyTb.getText()+"                  "+Total+"\n");
             }else{
-                BillTxt.setText(BillTxt.getText()+i+"                 "+BookNameTb.getText()+"            "+PriceTb.getText()+"            "+QtyTb.getText()+"            "+Total+"\n");                     
-            } 
+                BillTxt.setText(BillTxt.getText()+i+"                 "+BookNameTb.getText()+"            "+PriceTb.getText()+"            "+QtyTb.getText()+"            "+Total+"\n");
+            }
             GrdTotal = GrdTotal + Total;
             GrdTotalLbI.setText("Rs " + GrdTotal);
             UpdateBook();
-        }   
+        }
     }//GEN-LAST:event_AddToBillBtnMouseClicked
 
     private void AddToBillBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToBillBtnActionPerformed
 
     }//GEN-LAST:event_AddToBillBtnActionPerformed
-    
+
 private void CountRow() {
     try {
          Con = DriverManager.getConnection("jdbc:derby://localhost:1527/BookShopDb","App","369369369");
@@ -329,27 +315,29 @@ private void CountRow() {
         e.printStackTrace();
     }
 }
+
     private void PrintBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PrintBtnMouseClicked
         try {
-            BillTxt.print(); 
+            BillTxt.print();
         } catch (Exception e) {
         }
         SaveBill();
-        Reset(); 
+        Reset();
     }//GEN-LAST:event_PrintBtnMouseClicked
 
     private void PrintBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrintBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PrintBtnActionPerformed
-int Stock  = 0;
+int Stock = 0;
     private void BooksTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BooksTableMouseClicked
         DefaultTableModel model = (DefaultTableModel)BooksTable.getModel();
         int MyIndex = BooksTable.getSelectedRow();
         BId = Integer.valueOf(model.getValueAt(MyIndex, 0).toString());
-        BookNameTb.setText(model.getValueAt(MyIndex, 1).toString());  
+        BookNameTb.setText(model.getValueAt(MyIndex, 1).toString());
         Stock = Integer.valueOf(model.getValueAt(MyIndex, 4).toString());
-        PriceTb.setText(model.getValueAt(MyIndex, 5).toString());  
+        PriceTb.setText(model.getValueAt(MyIndex, 5).toString());
     }//GEN-LAST:event_BooksTableMouseClicked
+
     
 private void  SaveBill() {
         if(BillNumTb.getText().isEmpty() || ClientNameTb.getText().isEmpty()) {
@@ -371,7 +359,6 @@ private void  SaveBill() {
         }     
     }
     
-
     private void Reset(){
         BookNameTb.setText(""); 
         PriceTb.setText("");
@@ -396,18 +383,13 @@ private void  SaveBill() {
                 e.printStackTrace();
             }
     }
-    
     private void ResetBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ResetBtn1MouseClicked
-         Reset();
+        Reset();
     }//GEN-LAST:event_ResetBtn1MouseClicked
 
     private void ResetBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetBtn1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ResetBtn1ActionPerformed
-
-    private void LogoutLbtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutLbtMouseClicked
-
-    }//GEN-LAST:event_LogoutLbtMouseClicked
 
     private void LogoutLbt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutLbt1MouseClicked
         new Login().setVisible(true);
@@ -458,7 +440,6 @@ private void  SaveBill() {
     private javax.swing.JTable BooksTable;
     private javax.swing.JTextField ClientNameTb;
     private javax.swing.JLabel GrdTotalLbI;
-    private javax.swing.JLabel LogoutLbt;
     private javax.swing.JLabel LogoutLbt1;
     private javax.swing.JTextField PriceTb;
     private javax.swing.JButton PrintBtn;
@@ -468,7 +449,6 @@ private void  SaveBill() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
